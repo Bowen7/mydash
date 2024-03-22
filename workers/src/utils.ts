@@ -134,3 +134,5 @@ export const createVariables = (siteTag: string, env: Env) => {
 		},
 	};
 };
+
+export const makeResponse = (data: any) => new Response(JSON.stringify(data), { headers: { 'content-type': 'application/json' } });

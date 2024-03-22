@@ -2,7 +2,7 @@ import { GraphQLClient } from 'graphql-request';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import { createVariables, query } from './utils';
+import { createVariables, query, makeResponse } from './utils';
 import { Env } from './types';
 
 dayjs.extend(utc);
@@ -15,7 +15,7 @@ export default {
 		const { searchParams } = new URL(request.url);
 		const siteTag = searchParams.get('siteTag');
 		if (!siteTag) {
-			return new Response('siteTag is required', { status: 400 });
+			return makeResponse({ message: 'siteTag is required', ok: false });
 		}
 
 		const API_TOKEN = searchParams.get('API_TOKEN');
@@ -49,7 +49,10 @@ export default {
 			variables,
 			requestHeaders,
 		});
-		response = new Response(JSON.stringify(data), {});
+		response = makeResponse({
+			ok: true,
+			data,
+		});
 
 		if (!API_TOKEN && cache && cacheKey) {
 			response.headers.append('Cache-Control', 's-maxage=3600');
