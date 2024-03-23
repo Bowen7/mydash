@@ -1,7 +1,11 @@
+import { Button } from '@/components/ui/button';
+
 function App() {
 	return (
 		<>
-			<div></div>
+			<div className="flex justify-center">
+				<Button>Click me</Button>
+			</div>
 			<h1 className="text-center">Vite + React</h1>
 		</>
 	);
