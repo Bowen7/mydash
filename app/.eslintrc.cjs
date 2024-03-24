@@ -5,7 +5,4 @@ module.exports = {
 	ignorePatterns: ['dist', '.eslintrc.cjs', 'postcss.config.js', 'tailwind.config.js'],
 	parser: '@typescript-eslint/parser',
 	plugins: ['react-refresh'],
-	rules: {
-		'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-	},
 };

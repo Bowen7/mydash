@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
-import { Icons } from '@/components/icons';
+import { GitHubLogoIcon } from '@radix-ui/react-icons';
+import { ModeToggle } from '@/components/mode-toggle';
 import { GITHUB_URL } from '@/config';
 import { cn } from '@/utils';
 import Logo from '/logo.svg';
@@ -30,9 +31,14 @@ export const Header = () => {
 					))}
 				</div>
 			</div>
-			<Link to={GITHUB_URL} target="_blank">
-				<Icons.gitHub className="w-4 h-4" />
-			</Link>
+			<div className="flex items-center space-x-2">
+				<Link to={GITHUB_URL} target="_blank">
+					<div className="w-9 py-2.5 hover:bg-accent inline-flex justify-center rounded-md">
+						<GitHubLogoIcon className="w-4 h-4" />
+					</div>
+				</Link>
+				<ModeToggle />
+			</div>
 		</header>
 	);
 };
