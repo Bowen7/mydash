@@ -18,7 +18,7 @@ export const siteFetch = async (request: IRequest, env: Env, ctx: ExecutionConte
         'Access-Control-Allow-Origin': '*',
       }
     : {
-        'Access-Control-Allow-Origin': 'https://dash.bowencodes.com',
+        'Access-Control-Allow-Origin': 'https://mydash.amind.app',
       };
   if (!siteTag) {
     return makeResponse({ message: 'siteTag is required', ok: false }, corsHeaders);
