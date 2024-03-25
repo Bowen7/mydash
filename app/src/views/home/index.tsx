@@ -16,7 +16,7 @@ export const Home = () => {
   });
 
   return (
-    <div className="p-8 pt-6 flex-1 flex flex-col max-w-screen-2xl">
+    <div className="p-8 pt-6 flex-1 flex flex-col max-w-screen-xl">
       <h2 className="text-3xl font-bold tracking-tight">Projects</h2>
       <Tabs value={selected} className="mt-4" onValueChange={setSelected}>
         <TabsList>
@@ -26,9 +26,9 @@ export const Home = () => {
             </TabsTrigger>
           ))}
         </TabsList>
-        {sites.map(({ name, siteTag, github }: Site) => (
+        {sites.map(({ name, siteTag, github, url }: Site) => (
           <TabsContent value={name} key={name} className="mt-6">
-            <Overview siteTag={siteTag} githubLink={github} />
+            <Overview siteTag={siteTag} githubLink={github} url={url} />
           </TabsContent>
         ))}
       </Tabs>
