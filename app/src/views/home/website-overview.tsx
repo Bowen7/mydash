@@ -11,7 +11,9 @@ type Data =
         viewer: {
           accounts: [
             {
-              totalPerformance: [{ aggregation: { pageLoadTime: number } }] | [];
+              totalPerformance:
+                | [{ aggregation: { pageLoadTime: number } }]
+                | [];
               visitsToday: [{ sum: { visits: number } }] | [];
               visits1d: [{ sum: { visits: number } }] | [];
               visits1to2d: [{ sum: { visits: number } }] | [];
@@ -46,18 +48,40 @@ export const WebsiteOverview = (props: Props) => {
       </div>
     );
   }
-  const { totalPerformance, visits1d, visits1to2d, visits7d, visits7to14d, visits30d, visits30to60d, visitsToday } =
-    data.data.viewer.accounts[0];
-  const pageLoadTime = Math.round((totalPerformance[0]?.aggregation.pageLoadTime ?? 0) / 1000);
+  const {
+    totalPerformance,
+    visits1d,
+    visits1to2d,
+    visits7d,
+    visits7to14d,
+    visits30d,
+    visits30to60d,
+    visitsToday,
+  } = data.data.viewer.accounts[0];
+  const pageLoadTime = Math.round(
+    (totalPerformance[0]?.aggregation.pageLoadTime ?? 0) / 1000
+  );
   return (
     <div className="space-y-8">
       <div className="space-y-4">
         <h4 className="font-bold tracking-tight">Visitors</h4>
         <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
           <StatusCard title="Today" value={visitsToday[0]?.sum.visits ?? 0} />
-          <StatusCard title="Previous 24 hours" value={visits1d[0]?.sum.visits ?? 0} lastValue={visits1to2d[0]?.sum.visits ?? 0} />
-          <StatusCard title="Previous 7 days" value={visits7d[0]?.sum.visits ?? 0} lastValue={visits7to14d[0]?.sum.visits ?? 0} />
-          <StatusCard title="Previous 30 days" value={visits30d[0]?.sum.visits ?? 0} lastValue={visits30to60d[0]?.sum.visits ?? 0} />
+          <StatusCard
+            title="Previous 24 hours"
+            value={visits1d[0]?.sum.visits ?? 0}
+            lastValue={visits1to2d[0]?.sum.visits ?? 0}
+          />
+          <StatusCard
+            title="Previous 7 days"
+            value={visits7d[0]?.sum.visits ?? 0}
+            lastValue={visits7to14d[0]?.sum.visits ?? 0}
+          />
+          <StatusCard
+            title="Previous 30 days"
+            value={visits30d[0]?.sum.visits ?? 0}
+            lastValue={visits30to60d[0]?.sum.visits ?? 0}
+          />
         </div>
       </div>
       <div className="space-y-4">

@@ -6,7 +6,10 @@ import { Overview } from './overview';
 import { Site } from '@/types';
 
 export const Home = () => {
-  const [selected, setSelected] = useLocalstorageState(PROJECT_STORAGE_KEY, sites[0].name);
+  const [selected, setSelected] = useLocalstorageState(
+    PROJECT_STORAGE_KEY,
+    sites[0].name
+  );
 
   useDidMount(() => {
     const isSelectedExists = sites.some(({ name }: Site) => name === selected);
