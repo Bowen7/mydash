@@ -31,20 +31,20 @@ export const StatusCard = (props: Props) => {
           >
             {growth !== 0 && (
               <div
-                className={cn('flex items-start', {
+                className={cn('flex items-center', {
                   'text-green-500': growth > 0,
                   'text-red-500': growth < 0,
                 })}
               >
                 {growth > 0 && (
                   <>
-                    <TriangleUpIcon />
+                    <TriangleUpIcon height={16} width={16} />
                     {'+' + growth + '%'}
                   </>
                 )}
                 {growth < 0 && (
                   <>
-                    <TriangleDownIcon />
+                    <TriangleDownIcon height={16} width={16} />
                     {growth + '%'}
                   </>
                 )}
