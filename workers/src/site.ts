@@ -1,7 +1,7 @@
 import { GraphQLClient, gql } from 'graphql-request';
 import { type IRequest } from 'itty-router';
 import dayjs from 'dayjs';
-import { ENDPOINT } from './config';
+import { ENDPOINT, TIMEZONE } from './config';
 import { Env } from './types';
 
 const createQuery = (key: string, filterKey: string) => {
@@ -14,7 +14,7 @@ const createQuery = (key: string, filterKey: string) => {
 	`;
 };
 
-export const query = gql`
+const query = gql`
 	{
 		viewer {
 			accounts(filter: { accountTag: $accountTag }) {
@@ -74,7 +74,7 @@ export const createVariables = (siteTag: string, env: Env) => {
   const fourteenDaysAgo = now.subtract(14, 'day').toISOString();
   const thirtyDaysAgo = now.subtract(30, 'day').toISOString();
   const sixtyDaysAgo = now.subtract(60, 'day').toISOString();
-  const todayTime = now.tz('Asia/Singapore').startOf('day').toISOString();
+  const todayTime = now.tz(TIMEZONE).startOf('day').toISOString();
   return {
     accountTag: env.ACCOUNT_TAG,
     visitsTodayFilter: createFilter({
