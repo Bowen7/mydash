@@ -1,39 +1,65 @@
-import { useLocalstorageState, useDidMount } from 'rooks';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PROJECT_STORAGE_KEY } from '@/config';
-import { Overview } from './overview';
-import { Site, sites } from 'mydash-shared';
+import { useMemo } from 'react';
+import useSWR from 'swr';
+import { Chart, DataValue } from './chart';
+import { Spinner } from '@/components/spinner';
+import { ErrorMsg } from '@/components/error-msg';
+
+type Data =
+  | { ok: false; message: string }
+  | {
+      ok: true;
+      data: {
+        viewer: {
+          accounts: [
+            {
+              [key: string]: {
+                sum: { visits: number };
+                dimensions: { ts: string };
+              }[];
+            }
+          ];
+        };
+      };
+    };
+
+const createValue = (keys: string[]) =>
+  keys.reduce<{ [key: string]: number }>((acc, prev) => {
+    acc[prev] = 0;
+    return acc;
+  }, {});
 
 export const Home = () => {
-  const [selected, setSelected] = useLocalstorageState(
-    PROJECT_STORAGE_KEY,
-    sites[0].name
-  );
-
-  useDidMount(() => {
-    const isSelectedExists = sites.some(({ name }: Site) => name === selected);
-    if (!isSelectedExists) {
-      setSelected(sites[0].name);
+  const { data, error, isLoading } = useSWR<Data>('/overview');
+  const values = useMemo(() => {
+    if (!data || !data.ok) {
+      return [];
     }
-  });
+    const accountData = data.data.viewer.accounts[0];
+    const keys = Object.keys(accountData);
+    const valueMap = new Map<string, { [key: string]: number }>();
+    keys.forEach((key) => {
+      accountData[key].forEach(({ sum, dimensions }) => {
+        const visits = sum.visits;
+        const date = dimensions.ts;
+        if (!valueMap.has(date)) {
+          valueMap.set(date, createValue(keys));
+        }
+        valueMap.get(date)![key] = visits;
+      });
+    });
+    const values: DataValue[] = [];
+    valueMap.forEach((value, key) => {
+      values.push({ date: key, ...value });
+    });
+    values.sort((a, b) => (a.date > b.date ? 1 : -1));
+    return values;
+  }, [data]);
 
-  return (
-    <div className="p-8 pt-6 flex-1 flex flex-col max-w-screen-xl">
-      <h2 className="text-3xl font-bold tracking-tight">Projects</h2>
-      <Tabs value={selected} className="mt-4" onValueChange={setSelected}>
-        <TabsList>
-          {sites.map(({ name }: Site) => (
-            <TabsTrigger value={name} key={name}>
-              {name}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        {sites.map(({ name, siteTag, github, url }: Site) => (
-          <TabsContent value={name} key={name} className="mt-6">
-            <Overview siteTag={siteTag} githubLink={github!} url={url} />
-          </TabsContent>
-        ))}
-      </Tabs>
-    </div>
-  );
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (error) {
+    return <ErrorMsg />;
+  }
+  return <Chart values={values} />;
 };

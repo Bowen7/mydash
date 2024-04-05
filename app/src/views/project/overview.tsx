@@ -30,15 +30,11 @@ type Data =
 type Props = {
   siteTag: string;
 };
-export const WebsiteOverview = (props: Props) => {
+export const Overview = (props: Props) => {
   const { siteTag } = props;
   const { data, error, isLoading } = useSWR<Data>(`/site/${siteTag}`);
   if (isLoading) {
-    return (
-      <div className="h-64 flex justify-center items-center">
-        <Spinner />
-      </div>
-    );
+    return <Spinner />;
   }
   if (error || !data?.ok) {
     return (
@@ -66,7 +62,11 @@ export const WebsiteOverview = (props: Props) => {
       <div className="space-y-4">
         <h4 className="font-bold tracking-tight">Visitors</h4>
         <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
-          <StatusCard title="Today" value={visitsToday[0]?.sum.visits ?? 0} />
+          <StatusCard
+            title="Today"
+            value={visitsToday[0]?.sum.visits ?? 0}
+            subtitle="UTC-8"
+          />
           <StatusCard
             title="Previous 24 hours"
             value={visits1d[0]?.sum.visits ?? 0}

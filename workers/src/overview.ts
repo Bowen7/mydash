@@ -1,7 +1,7 @@
 import { GraphQLClient, gql } from 'graphql-request';
 import { type IRequest } from 'itty-router';
 import { sites } from 'mydash-shared';
-import { ENDPOINT, TIMEZONE } from './config';
+import { ENDPOINT } from './config';
 import { Env } from './types';
 import dayjs from 'dayjs';
 
@@ -31,11 +31,7 @@ const query = gql`
 const createVariables = (env: Env) => {
   const now = dayjs();
   const end = now.toISOString();
-  const start = now
-    .subtract(7, 'day')
-    .tz(TIMEZONE)
-    .startOf('day')
-    .toISOString();
+  const start = now.subtract(6, 'day').utc().startOf('day').toISOString();
   const filters: { [key: string]: any } = {
     accountTag: env.ACCOUNT_TAG,
   };

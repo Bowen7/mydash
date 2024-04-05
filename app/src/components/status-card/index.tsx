@@ -6,9 +6,10 @@ type Props = {
   title: string;
   value: number;
   lastValue?: number;
+  subtitle?: string;
 };
 export const StatusCard = (props: Props) => {
-  const { title, value, lastValue = 0 } = props;
+  const { title, value, lastValue = 0, subtitle } = props;
   const growth = useMemo(() => {
     if (lastValue) {
       const growth = ((value - lastValue) / lastValue) * 100;
@@ -24,33 +25,37 @@ export const StatusCard = (props: Props) => {
       <CardHeader className="pb-2">
         <CardTitle className="text-sm font-medium flex items-center justify-between">
           <div>{title}</div>
-          <div
-            className={cn('text-xs text-muted-foreground', {
-              hidden: growth === 0,
-            })}
-          >
-            {growth !== 0 && (
-              <div
-                className={cn('flex items-center', {
-                  'text-green-500': growth > 0,
-                  'text-red-500': growth < 0,
-                })}
-              >
-                {growth > 0 && (
-                  <>
-                    <TriangleUpIcon height={16} width={16} />
-                    {'+' + growth + '%'}
-                  </>
-                )}
-                {growth < 0 && (
-                  <>
-                    <TriangleDownIcon height={16} width={16} />
-                    {growth + '%'}
-                  </>
-                )}
-              </div>
-            )}
-          </div>
+          {subtitle ? (
+            <div className="text-xs text-muted-foreground">{subtitle}</div>
+          ) : (
+            <div
+              className={cn('text-xs text-muted-foreground', {
+                hidden: growth === 0,
+              })}
+            >
+              {growth !== 0 && (
+                <div
+                  className={cn('flex items-center', {
+                    'text-green-500': growth > 0,
+                    'text-red-500': growth < 0,
+                  })}
+                >
+                  {growth > 0 && (
+                    <>
+                      <TriangleUpIcon height={16} width={16} />
+                      {'+' + growth + '%'}
+                    </>
+                  )}
+                  {growth < 0 && (
+                    <>
+                      <TriangleDownIcon height={16} width={16} />
+                      {growth + '%'}
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </CardTitle>
       </CardHeader>
       <CardContent>
