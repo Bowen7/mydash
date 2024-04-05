@@ -1,9 +1,8 @@
 import { useLocalstorageState, useDidMount } from 'rooks';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PROJECT_STORAGE_KEY } from '@/config';
-import sites from '@/../sites.yaml';
 import { Overview } from './overview';
-import { Site } from '@/types';
+import { Site, sites } from 'mydash-shared';
 
 export const Home = () => {
   const [selected, setSelected] = useLocalstorageState(
@@ -31,7 +30,7 @@ export const Home = () => {
         </TabsList>
         {sites.map(({ name, siteTag, github, url }: Site) => (
           <TabsContent value={name} key={name} className="mt-6">
-            <Overview siteTag={siteTag} githubLink={github} url={url} />
+            <Overview siteTag={siteTag} githubLink={github!} url={url} />
           </TabsContent>
         ))}
       </Tabs>
