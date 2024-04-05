@@ -17,6 +17,6 @@
 		"dayjs": "^1.11.10",
 		"graphql": "^16.8.1",
 		"graphql-request": "^6.1.0",
-		"itty-router": "^4.2.2"
+		"itty-router": "^5.0.9"
 	}
 }

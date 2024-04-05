@@ -1,17 +1,23 @@
-import { Router, withParams } from 'itty-router';
+import { AutoRouter, type IRequest } from 'itty-router';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import { siteFetch } from './site';
+import { siteRouter } from './site';
+// import { overviewFetch } from './overview';
+import { withCache, cacheTransformer } from './cache';
 import { Env } from './types';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const router = Router();
+type CFArgs = [Env, ExecutionContext];
 
-router.all('*', withParams).get('/site/:siteTag', siteFetch);
+const router = AutoRouter<IRequest, CFArgs>({
+  finally: [cacheTransformer],
+});
 
-export default {
-  fetch: (request: Request, env: Env, ctx: ExecutionContext) => router.handle(request, env, ctx, request),
-};
+router.all('*', withCache).get('/site/:siteTag', siteRouter);
+// .get('/overview/:siteTags', overviewFetch);
+
+// https://github.com/cloudflare/workers-sdk/issues/5420
+export default { ...router };

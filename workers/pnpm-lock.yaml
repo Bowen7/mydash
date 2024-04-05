@@ -6,7 +6,7 @@ specifiers:
   dayjs: ^1.11.10
   graphql: ^16.8.1
   graphql-request: ^6.1.0
-  itty-router: ^4.2.2
+  itty-router: ^5.0.9
   typescript: ^5.0.4
   wrangler: ^3.0.0
 
@@ -14,7 +14,7 @@ dependencies:
   dayjs: 1.11.10
   graphql: 16.8.1
   graphql-request: 6.1.0_graphql@16.8.1
-  itty-router: 4.2.2
+  itty-router: 5.0.9
 
 devDependencies:
   '@cloudflare/vitest-pool-workers': 0.1.4_23784b6fba4a74f08e2d13dadf9da6ca
@@ -581,8 +581,8 @@ packages:
     engines: {node: '>=0.12.0'}
     dev: true
 
-  /itty-router/4.2.2:
-    resolution: {integrity: sha512-KegPW0l9SNPadProoFT07AB84uOqLUwzlXQ7HsqkS31WUrxkjdhcemRpTDUuetbMJ89uBtWeQSVoiEmUAu31uw==}
+  /itty-router/5.0.9:
+    resolution: {integrity: sha512-rUsR9s8S9MQjU7qpTPdydh8gVsocIx4KBDmxCltivqiS3u/UvhDzZO2kvuFMEmx7auvh8mt/GEI2ED25Tdii+g==}
     dev: false
 
   /magic-string/0.25.9:
