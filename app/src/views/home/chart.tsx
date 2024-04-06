@@ -88,6 +88,7 @@ export const Chart = ({ values }: Props) => {
                 key={site.key}
                 dataKey={site.key}
                 fill={site.color}
+                stroke={site.color}
                 stackId="date"
                 hide={!selectedKeys.has(site.key)}
               />
