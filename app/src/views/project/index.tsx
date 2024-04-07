@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import { ExternalLinkIcon } from '@radix-ui/react-icons';
 import { useParams } from 'react-router-dom';
 import { sites } from 'mydash-shared';
@@ -13,20 +12,20 @@ export const Project = () => {
   const { url, github, siteTag } = site;
   return (
     <div className="">
-      <Link to={url}>
+      <a href={url} target="_blank">
         <h3 className="text-xl font-bold tracking-tight mb-4 flex items-center space-x-2">
           <span>Website</span>
           <ExternalLinkIcon />
         </h3>
-      </Link>
+      </a>
       <Overview siteTag={siteTag} />
       {github && (
-        <Link to={github}>
+        <a href={github} target="_blank">
           <h3 className="text-xl font-bold tracking-tight mb-4 mt-8 flex items-center space-x-2">
             <span>Github</span>
             <ExternalLinkIcon />
           </h3>
-        </Link>
+        </a>
       )}
     </div>
   );
